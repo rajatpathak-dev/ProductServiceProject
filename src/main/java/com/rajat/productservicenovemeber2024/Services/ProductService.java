@@ -7,4 +7,10 @@ import java.util.List;
 public interface ProductService {
     Product getSingleProduct(Long id);
     List<Product> getAllProducts();
+
+    List<Product> getLimitedProducts(Integer num);
+
+    List<String> getAllCategories();
+
+    List<Product> getAllProductsInACategory(String categoryName);
 }

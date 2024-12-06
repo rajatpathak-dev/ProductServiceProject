@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -38,9 +39,37 @@ public class FakeStroreProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
-        FakeStoreProductDto[] fakeStoreProductDtos =  restTemplate.getForObject("https://fakestoreapi.com/products?sort=desc",FakeStoreProductDto[].class);
+        FakeStoreProductDto[] fakeStoreProductDtos =  restTemplate.getForObject("https://fakestoreapi.com/products",FakeStoreProductDto[].class);
         List<Product> products = new ArrayList<>();
         for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
+            products.add(convertFakeStoreProductToProduct(fakeStoreProductDto));
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> getLimitedProducts(Integer num) {
+        FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject("https://fakestoreapi.com/products?limit="+num,FakeStoreProductDto[].class);
+       List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto:fakeStoreProductDtos){
+           products.add(convertFakeStoreProductToProduct(fakeStoreProductDto));
+       }
+        return products;
+    }
+
+    @Override
+    public List<String> getAllCategories() {
+       String[] categories = restTemplate.getForObject("https://fakestoreapi.com/products/categories",String[].class);
+       return Arrays.asList(categories);
+    }
+
+    @Override
+    public List<Product> getAllProductsInACategory(String categoryName) {
+        FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject("https://fakestoreapi.com/products/category/"+categoryName,
+                                                                                FakeStoreProductDto[].class);
+
+        List<Product> products = new ArrayList<>();
+        for(FakeStoreProductDto fakeStoreProductDto:fakeStoreProductDtos){
             products.add(convertFakeStoreProductToProduct(fakeStoreProductDto));
         }
         return products;

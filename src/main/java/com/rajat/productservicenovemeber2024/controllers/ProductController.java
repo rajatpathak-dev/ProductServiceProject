@@ -24,8 +24,31 @@ public class ProductController {
         return productService.getSingleProduct(id);
     }
 
+
+
     @GetMapping("")
     public List<Product> getAllProducts(){
         return  productService.getAllProducts();
     }
+
+    @GetMapping("/limit/{num}")
+    public List<Product> getLimitedProducts(@PathVariable("num") Integer num){
+        return productService.getLimitedProducts(num);
+    }
+
+    @GetMapping("/categories")
+    public List<String> getAllCategories(){
+        return productService.getAllCategories();
+    }
+
+    @GetMapping("/category/{categoryName}")
+    public List<Product> getProductsInACategory(@PathVariable("categoryName") String categoryName){
+        return productService.getAllProductsInACategory(categoryName);
+    }
+
+
+
+
+
+
 }
