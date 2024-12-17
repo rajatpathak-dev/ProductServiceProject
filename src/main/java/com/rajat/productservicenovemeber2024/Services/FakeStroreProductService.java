@@ -1,6 +1,7 @@
 package com.rajat.productservicenovemeber2024.Services;
 
 import com.rajat.productservicenovemeber2024.DTO.FakeStoreProductDto;
+import com.rajat.productservicenovemeber2024.Exceptions.ProductNotFoundException;
 import com.rajat.productservicenovemeber2024.models.Category;
 import com.rajat.productservicenovemeber2024.models.Product;
 import org.springframework.http.HttpMethod;
@@ -24,11 +25,15 @@ public class FakeStroreProductService implements ProductService {
         this.restTemplate = restTemplate;
     }
     @Override
-    public Product getSingleProduct(Long productId) {
+    public Product getSingleProduct(Long productId) throws ProductNotFoundException{
         FakeStoreProductDto fakeStoreProductDto = restTemplate.
                 getForObject("https://fakestoreapi.com/products/" + productId,
                         FakeStoreProductDto.class
                 );
+
+        if(fakeStoreProductDto == null){
+            throw new ProductNotFoundException("Product with id "+productId+" not found");
+        }
         return convertFakeStoreProductToProduct(fakeStoreProductDto);
     }
 

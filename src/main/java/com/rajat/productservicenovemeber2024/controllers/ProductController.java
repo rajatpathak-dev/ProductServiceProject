@@ -1,7 +1,11 @@
 package com.rajat.productservicenovemeber2024.controllers;
 
+import com.rajat.productservicenovemeber2024.Exceptions.ProductNotFoundException;
 import com.rajat.productservicenovemeber2024.Services.ProductService;
 import com.rajat.productservicenovemeber2024.models.Product;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +21,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable("id") Long id){
-        return productService.getSingleProduct(id);
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long id) throws ProductNotFoundException {
+        ResponseEntity<Product> responseEntity = new ResponseEntity<>(productService.getSingleProduct(id), HttpStatus.OK);
+        return responseEntity;
     }
 
 
