@@ -2,10 +2,7 @@ package com.rajat.productservicenovemeber2024.controllers;
 
 import com.rajat.productservicenovemeber2024.Services.ProductService;
 import com.rajat.productservicenovemeber2024.models.Product;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +41,16 @@ public class ProductController {
     @GetMapping("/category/{categoryName}")
     public List<Product> getProductsInACategory(@PathVariable("categoryName") String categoryName){
         return productService.getAllProductsInACategory(categoryName);
+    }
+
+//    @PatchMapping("/{id}")
+//    public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
+//        return productService.updateProduct(id,product);
+//    }
+
+    @PutMapping("/{id}")
+    public Product replaceproduct(@PathVariable("id") Long id , @RequestBody Product product){
+        return productService.replaceProduct(id,product);
     }
 
 

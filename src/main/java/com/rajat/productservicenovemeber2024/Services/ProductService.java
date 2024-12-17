@@ -1,5 +1,6 @@
 package com.rajat.productservicenovemeber2024.Services;
 
+import com.rajat.productservicenovemeber2024.ProductServiceNovemeber2024Application;
 import com.rajat.productservicenovemeber2024.models.Product;
 
 import java.util.List;
@@ -13,4 +14,8 @@ public interface ProductService {
     List<String> getAllCategories();
 
     List<Product> getAllProductsInACategory(String categoryName);
+
+    Product updateProduct(Long id, Product product);
+
+    Product replaceProduct(Long id, Product product);
 }
