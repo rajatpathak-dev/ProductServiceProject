@@ -42,7 +42,10 @@ public class FakeStroreProductService implements ProductService {
         product.setId(fakeStoreProductDto.getId());
         product.setPrice(fakeStoreProductDto.getPrice());
         product.setTitle(fakeStoreProductDto.getTitle());
-        product.setCategory(new Category(fakeStoreProductDto.getCategory(), fakeStoreProductDto.getDescription()));
+        Category category = new Category();
+        category.setName(fakeStoreProductDto.getCategory());
+        category.setDescription(fakeStoreProductDto.getDescription());
+        product.setCategory(category);
         return product;
     }
 
@@ -86,7 +89,10 @@ public class FakeStroreProductService implements ProductService {
 
     @Override
     public Product updateProduct(Long id,Product product) {
-             return null;
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(product, FakeStoreProductDto.class);
+        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor = new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
+        FakeStoreProductDto fakeStoreProductDto = restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PATCH, requestCallback, responseExtractor);
+        return convertFakeStoreProductToProduct(fakeStoreProductDto);
 
     }
 
@@ -97,4 +103,7 @@ public class FakeStroreProductService implements ProductService {
         FakeStoreProductDto fakeStoreProductDto = restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PUT, requestCallback, responseExtractor);
         return convertFakeStoreProductToProduct(fakeStoreProductDto);
     }
+
+
+
 }

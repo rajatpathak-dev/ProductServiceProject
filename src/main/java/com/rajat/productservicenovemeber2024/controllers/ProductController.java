@@ -3,6 +3,7 @@ package com.rajat.productservicenovemeber2024.controllers;
 import com.rajat.productservicenovemeber2024.Exceptions.ProductNotFoundException;
 import com.rajat.productservicenovemeber2024.Services.ProductService;
 import com.rajat.productservicenovemeber2024.models.Product;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class ProductController {
 
     private ProductService productService;
 
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("dbservice") ProductService productService){
         this.productService = productService;
     }
 
@@ -48,10 +49,10 @@ public class ProductController {
         return productService.getAllProductsInACategory(categoryName);
     }
 
-//    @PatchMapping("/{id}")
-//    public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
-//        return productService.updateProduct(id,product);
-//    }
+    @PatchMapping("/{id}")
+    public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
+        return productService.updateProduct(id,product);
+    }
 
     @PutMapping("/{id}")
     public Product replaceproduct(@PathVariable("id") Long id , @RequestBody Product product){
