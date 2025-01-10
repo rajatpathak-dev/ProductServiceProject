@@ -1,5 +1,6 @@
 package com.rajat.productservicenovemeber2024.Services;
 
+import com.rajat.productservicenovemeber2024.Exceptions.CategoryNotFoundException;
 import com.rajat.productservicenovemeber2024.Exceptions.ProductNotFoundException;
 import com.rajat.productservicenovemeber2024.ProductServiceNovemeber2024Application;
 import com.rajat.productservicenovemeber2024.models.Product;
@@ -14,9 +15,14 @@ public interface ProductService {
 
     List<String> getAllCategories();
 
-    List<Product> getAllProductsInACategory(String categoryName);
+    List<Product> getAllProductsInACategory(String categoryName) throws CategoryNotFoundException;
 
-    Product updateProduct(Long id, Product product);
+    Product saveProduct(Product product);
 
-    Product replaceProduct(Long id, Product product);
+
+    Product updateProduct(Long id, Product product) throws ProductNotFoundException;
+
+    Product replaceProduct(Long id, Product product) throws ProductNotFoundException;
+
+    Product deleteProduct(Long id) throws ProductNotFoundException;
 }
